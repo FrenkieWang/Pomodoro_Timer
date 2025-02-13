@@ -161,24 +161,22 @@
             startButton.disabled = true;
             pauseButton.disabled = false;
             interval_ID = setInterval(() => {
-                if (!isPaused) {
-                    timeLeft--;
-                    updateDisplay();
-                    if (timeLeft <= 0) {
-                        clearInterval(interval_ID);
-                        alert('Take a break');
-                        pauseButton.disabled = true; // Disable pause button when time is up
-                    }
-                }
+                timeLeft--;
+                updateDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(interval_ID);
+                    alert('Take a break');
+                    pauseButton.disabled = true; 
+                }                
             }, 1000);
         }
 
         function pauseTimer() {
-            if (isPaused) {
+            if (isPaused) { // Resume the timer
                 isPaused = false;
                 pauseButton.textContent = 'Pause';
                 startTimer();
-            } else {
+            } else { // Pause the timer
                 isPaused = true;
                 pauseButton.textContent = 'Resume';
                 clearInterval(interval_ID);
