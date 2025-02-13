@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: lightblue;
+            margin: 0;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #007BFF;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+        }
+
+        .navbar button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            transition: background-color 0.3s;
+        }
+
+        .navbar button:hover {
+            background-color: #0056b3;
+        }
+
+        .pomodoro {
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            top: 5%;
+            /* width: 60%; 
+            height: 60%; 
+            background: url('https://res.cloudinary.com/dc8ytlj2n/image/upload/v1739455191/applephoto_yfnksi.svg') no-repeat center center; */
+            width: 100%; 
+            height: 100%; 
+            background: url('https://res.cloudinary.com/dc8ytlj2n/image/upload/v1739455192/apple_tzck3f.svg') no-repeat center center;
+            background-size: contain;
+            position: relative;
+            margin-top: 60px; /* Adjust for navbar height */
+        }
+
+        .timer {
+            position:relative;
+            text-align: center;
+            background-color: lightgray;
+        }
+
+        #clock {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background-color: white;
+            font-family: 'Orbitron', sans-serif;
+            transition: background-color 0.3s, border 0.3s, border-radius 0.3s;
+        }
+
+        #clock:hover {
+            background-color: yellow !important;
+        }
+
+        .buttons button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            color: white;
+            border: none;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #start {
+            background-color: green;
+        }
+
+        #pause {
+            background-color: goldenrod; 
+        }
+
+        #stop {
+            background-color: red;
+        }
+
+        .buttons button:hover {
+            border: 5px solid black;
+        }
+
+        .buttons button:disabled {
+            cursor: not-allowed; 
+            opacity: 0.6; 
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button>Pomodoro Timer</button>
+        <button>CA2</button>
+        <button>CA3</button>
+        <button>CA4</button>
+        <button>CA5</button>
+    </div>
+    <div class="pomodoro">
+        <div class="timer">
+            <div id="clock">25:00</div>
+            <div class="buttons">
+                <button id="start">Start</button>
+                <button id="pause" disabled>Pause</button>
+                <button id="stop">Stop</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // const TIME_LEFT = 1 * 60 + 3; // 1 minutes + 3 seconds
+        const TIME_LEFT = 25 * 60; // 25 minutes
+        let interval_ID;
+        let isPaused = false;
+        let timeLeft = TIME_LEFT; // 25 minutes in seconds
+
+        const timeDisplay = document.getElementById('clock');
+        const startButton = document.getElementById('start');
+        const pauseButton = document.getElementById('pause');
+        const stopButton = document.getElementById('stop');
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timeDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft < 60) {
+                timeDisplay.style.color = 'red';
+                timeDisplay.style.borderRadius = '5px';
+                timeDisplay.style.backgroundColor = 'black';
+                timeDisplay.style.border = '5px solid gray';
+            } else {
+                timeDisplay.style.color = 'black';
+                timeDisplay.style.borderRadius = '0';
+                timeDisplay.style.backgroundColor = 'white';
+                timeDisplay.style.border = 'none';
+            }
+        }
+
+        function startTimer() {
+            clearInterval(interval_ID);
+            startButton.disabled = true;
+            pauseButton.disabled = false;
+            interval_ID = setInterval(() => {
+                if (!isPaused) {
+                    timeLeft--;
+                    updateDisplay();
+                    if (timeLeft <= 0) {
+                        clearInterval(interval_ID);
+                        alert('Take a break');
+                        pauseButton.disabled = true; // Disable pause button when time is up
+                    }
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            if (isPaused) {
+                isPaused = false;
+                pauseButton.textContent = 'Pause';
+                startTimer();
+            } else {
+                isPaused = true;
+                pauseButton.textContent = 'Resume';
+                clearInterval(interval_ID);
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(interval_ID);
+            timeLeft = TIME_LEFT; 
+            updateDisplay();
+            startButton.disabled = false;
+            pauseButton.disabled = true;
+            pauseButton.textContent = 'Pause';
+            isPaused = false;
+        }
+
+        startButton.addEventListener('click', startTimer);
+        pauseButton.addEventListener('click', pauseTimer);
+        stopButton.addEventListener('click', stopTimer);
+
+        updateDisplay();
+    </script>
+</body>
+</html>

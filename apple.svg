@@ -1,0 +1,10 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Red Circle with Green Border -->
+  <circle cx="200" cy="200" r="100" fill="red" stroke="green" stroke-width="10" />
+  <!-- Stem -->
+  <line x1="200" y1="100" x2="200" y2="50" stroke="green" stroke-width="10" />
+  <!-- Large Left Leaf -->
+  <path d="M200 50 Q140 0, 80 50 Q140 100, 200 50" fill="green" />
+  <!-- Large Right Leaf -->
+  <path d="M200 50 Q260 0, 320 50 Q260 100, 200 50" fill="green" />
+</svg>
