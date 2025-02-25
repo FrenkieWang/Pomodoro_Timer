@@ -18,7 +18,7 @@
             margin: 0;
         }
 
-        .navbar {
+        nav {
             width: 100%;
             background-color: #007BFF;
             display: flex;
@@ -28,7 +28,7 @@
             top: 0;
         }
 
-        .navbar button {
+        nav button {
             background-color: #007BFF;
             color: white;
             border: none;
@@ -39,7 +39,7 @@
             transition: background-color 0.3s;
         }
 
-        .navbar button:hover {
+        nav button:hover {
             background-color: #0056b3;
         }
 
@@ -59,22 +59,22 @@
             margin-top: 60px; /* Adjust for navbar height */
         }
 
-        .timer {
+        .clock {
             position:relative;
             text-align: center;
-            background-color: lightgray;
         }
 
-        #clock {
+        #timer {
+            margin: 0;     /* <p> has default margin */
             font-size: 48px;
             margin-bottom: 20px;
-            background-color: white;
+            color: white;
             font-family: 'Orbitron', sans-serif;
             transition: background-color 0.3s, border 0.3s, border-radius 0.3s;
         }
 
-        #clock:hover {
-            background-color: yellow !important;
+        #timer:hover {
+            color: yellow !important;
         }
 
         .buttons button {
@@ -85,6 +85,10 @@
             color: white;
             border: none;
             font-family: 'Roboto', sans-serif;
+        }
+
+        .buttons{
+            background-color: pink;
         }
 
         #start {
@@ -110,16 +114,16 @@
     </style>
 </head>
 <body>
-    <div class="navbar">
+    <nav>
         <button>Pomodoro Timer</button>
         <button>CA2</button>
         <button>CA3</button>
         <button>CA4</button>
         <button>CA5</button>
-    </div>
+    </nav>
     <div class="pomodoro">
-        <div class="timer">
-            <div id="clock">25:00</div>
+        <div class="clock">
+            <p id="timer">25:00</p>
             <div class="buttons">
                 <button id="start">Start</button>
                 <button id="pause" disabled>Pause</button>
@@ -134,7 +138,7 @@
         let isPaused = false;
         let timeLeft = TIME_LEFT; // 25 minutes in seconds
 
-        const timeDisplay = document.getElementById('clock');
+        const timeDisplay = document.getElementById('timer');
         const startButton = document.getElementById('start');
         const pauseButton = document.getElementById('pause');
         const stopButton = document.getElementById('stop');
@@ -149,12 +153,25 @@
                 timeDisplay.style.backgroundColor = 'black';
                 timeDisplay.style.border = '5px solid gray';
             } else {
-                timeDisplay.style.color = 'black';
+                timeDisplay.style.color = 'white';
                 timeDisplay.style.borderRadius = '0';
-                timeDisplay.style.backgroundColor = 'white';
+                timeDisplay.style.backgroundColor = 'transparent';
                 timeDisplay.style.border = 'none';
             }
         }
+
+        /*
+        // What would happen if the setInterval was created outside of a function instead of inside
+        let interval_I1 = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(interval_ID);
+                    alert('Take a break');
+                    pauseButton.disabled = true; 
+                }                
+            }, 1000);
+        */
 
         function startTimer() {
             clearInterval(interval_ID);
