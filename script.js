@@ -43,6 +43,7 @@ function startTimer() {
     clearInterval(interval_ID);
     startButton.disabled = true;
     pauseButton.disabled = false;
+    stopButton.disabled = false;
     interval_ID = setInterval(() => {
         timeLeft--;
         updateDisplay();
@@ -50,7 +51,6 @@ function startTimer() {
             clearInterval(interval_ID);
             alert('Take a break');
             pauseButton.disabled = true; 
-            stopButton.disabled = false;
         }                
     }, 1000);
 }
