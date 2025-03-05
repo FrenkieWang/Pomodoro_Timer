@@ -50,6 +50,7 @@ function startTimer() {
             clearInterval(interval_ID);
             alert('Take a break');
             pauseButton.disabled = true; 
+            stopButton.disabled = false;
         }                
     }, 1000);
 }
@@ -72,6 +73,7 @@ function stopTimer() {
     updateDisplay();
     startButton.disabled = false;
     pauseButton.disabled = true;
+    stopButton.disabled = true;
     pauseButton.textContent = 'Pause';
     isPaused = false;
 }
